@@ -1,6 +1,8 @@
 /////////////////////////
 // decode 0x33
 /////////////////////////
+#include<stdint.h>
+
 void decoder33(uint64_t *in_data){
   union Temp{
     uint8_t dat[8];
