@@ -2,6 +2,7 @@
 // Copy right DGcapital group
 // Author:T.Goto
 // 2023/4/18 first edition
+// 2023/9/8 second edition
 //
 //
 //
@@ -77,7 +78,7 @@ int receive_dlt645(uint8_t *command, uint8_t *id, uint8_t *len, uint8_t *data, b
 				decoder33(&(command[k]), 1);
 				k++;
 			}
-			if(i>j+11 && k<10){
+			if(i>j+11 && k<10 && k>=2){
 				data[k-2] = rx_data;
 				decoder33(&(data[k-2]), 1);
 				k++;
@@ -112,7 +113,7 @@ int receive_dlt645(uint8_t *command, uint8_t *id, uint8_t *len, uint8_t *data, b
 		}//if(Serial.available() > 0)
 
 		//check timer
-		if(CLOCK() - TIMEOUT > timer){//violation DLT645
+		if(CLOCK() - timer > TIMEOUT){//violation DLT645
 			return 1;
 		}
 	}//while(packet_end == false)

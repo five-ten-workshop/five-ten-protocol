@@ -3,6 +3,7 @@
 //Copy rights : DG Capital Group
 //Auth. T.Goto
 //2023/4/18 Rev.0
+//2023/9/7 Rev.1 If the measured value is 0, return 1(error).
 **********************************************/
 #ifndef _1005500_test_main_h
 #define _1005500_test_main_h
@@ -94,6 +95,9 @@ int receive_response(uint8_t com_num, uint8_t *id, uint8_t *len, uint8_t *res_da
 			return 1;//receiving is failed.//230711
 		}else{//the packet were sent from slave.
 			DBG("receive_response:rcv645():com_recv=");DBG((int)*com_recv, HEX);DBG(" len=");DBG((int)*len, HEX);DBG(" res_data=");DBG((int)res_data[0], HEX);DBG("\n");
+			if(SERIAL_AVAILABLE() > 0){
+				continue;
+			}//if
 			break;//receiving is succeeded.
 		}
 	}//while(1)
@@ -229,6 +233,12 @@ int main2(long *measure_data_rf, long *measure_data_vf){
 	}
 	DBG("The VF(V) is ");DBG(*(uint32_t*)result);DBG("\n");
 	*measure_data_vf = *(uint32_t *)result;
+
+	if((*measure_data_rf == 0) && (*measure_data_vf == 0)){
+		//There is no measuring data.
+		DBG("The data that is not measured.\n");
+		return(1);
+	}
 
 	DBG("Successfully measured.\n");
 	return(0);
