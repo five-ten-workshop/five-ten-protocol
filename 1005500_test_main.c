@@ -222,8 +222,8 @@ int main2(long *measure_data_rf, long *measure_data_vf){
 		DBG("main:Fault at measuring RF\n");
 		return(1);// none of response
 	}
-	DBG("The RF(ohm) is ");	DBG(*(uint32_t *)result);DBG("\n");
-	*measure_data_rf = *(uint32_t *)result;
+	DBG("The RF(ohm) is ");	DBG(*(int32_t *)result);DBG("\n");
+	*measure_data_rf = *(int32_t *)result;
 	
 	//pick up the measurement data
 	DBG("Pick up the measurement data of VF\n");
@@ -231,8 +231,8 @@ int main2(long *measure_data_rf, long *measure_data_vf){
 		DBG("main:Fault at measuring RF\n");
 		return(1);// none of response
 	}
-	DBG("The VF(V) is ");DBG(*(uint32_t*)result);DBG("\n");
-	*measure_data_vf = *(uint32_t *)result;
+	DBG("The VF(V) is ");DBG(*(int32_t*)result);DBG("\n");
+	*measure_data_vf = *(int32_t *)result;
 
 	if((*measure_data_rf == 0) && (*measure_data_vf == 0)){
 		//There is no measuring data.
